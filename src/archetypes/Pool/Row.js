@@ -259,7 +259,7 @@ export default styled(({ address, className, yfl }) => {
               <div>
                 <LazyBoi
                   value={pool?.reward?.yfl?.rate}
-                  format={(val) => format.decimals(units.fromWei(val), 6)}
+                  format={(val) => format.decimals(units.fromWei(val) * 86400, 6)}
                   suffix={<span className='suffix'> YFL/day</span>}
                 />
               </div>
@@ -267,7 +267,7 @@ export default styled(({ address, className, yfl }) => {
                 <div>
                   <LazyBoi
                     value={pool?.reward?.ert?.rate}
-                    format={(val) => format.decimals(units.fromWei(val), 6)}
+                    format={(val) => format.decimals(units.fromWei(val) * 86400, 6)}
                     suffix={<span className='suffix'> {ertSymbol}/day</span>}
                   />
                 </div>

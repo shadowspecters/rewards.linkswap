@@ -105,21 +105,19 @@ const hydration = {
       fields.reward.yfl.address = await fields.contracts.stakingRewards.methods
         .rewardTokens(0)
         .call();
-      fields.reward.yfl.rate =
-        (await fields.contracts.stakingRewards.methods.rewardRate(0).call()) * 86400;
+      fields.reward.yfl.rate = await fields.contracts.stakingRewards.methods.rewardRate(0).call();
 
       // check for ERT rewards
       try {
         const ert_address = await fields.contracts.stakingRewards.methods.rewardTokens(1).call();
-        const ert_rate =
-          (await fields.contracts.stakingRewards.methods.rewardRate(1).call()) * 86400;
+        const ert_rate = await fields.contracts.stakingRewards.methods.rewardRate(1).call();
 
-        // if (ert_address !== '0x0000000000000000000000000000000000000000') {
-        //   fields.reward.ert = {
-        //     address: ert_address,
-        //     rate: ert_rate,
-        //   };
-        // }
+         if (ert_address !== '0x0000000000000000000000000000000000000000') {
+           fields.reward.ert = {
+             address: ert_address,
+             rate: ert_rate,
+           };
+         }
       } catch (e) {}
 
       update(`pool.${poolAddress}`, fields, () => hydrate('pool.values', poolAddress));
