@@ -190,11 +190,16 @@ const HasPosition = styled(({ address, className }) => {
             </Button>
           </span>
         )}
-      {pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C' &&
+      {(pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C' ||
+        pool?.address === '0xdef0CEF53E0D4c6A5E568c53EdCf45CeB33DBE46') &&
         position?.reward?.ert && ( // Show MASQ as well as YFL for MASQ/ETH pool's reward
           <span>
             <Stat
-              title={`Unclaimed MASQ`}
+              title={
+                pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C'
+                  ? `Unclaimed MASQ`
+                  : 'Unclaimed GSWAP'
+              }
               //info={`≈ ${format.currency(fiat_rewards_ert)}`}
               large
             >
