@@ -68,6 +68,7 @@ const hydration = {
         ...pool,
         reward: {
           yfl: {},
+          ert: {},
         },
         periodFinish: null,
         contracts: {},

@@ -25,7 +25,8 @@ export const Networks = {
           },
           address: '0x7e5A536F3d79791E283940ec379CEE10C9C40e86',
           rewardsAddress: '0x72368fB97dab2B94A5664EbeEbF504EF482fF149',
-          liqudityUrl: 'https://linkswap.app/#/add/ETH/0x28cb7e841ee97947a86B06fA4090C8451f64c0be',
+          liqudityUrl:
+            'https://linkswap.app/#/add/ETH/0x28cb7e841ee97947a86B06fA4090C8451f64c0be',
         },
         {
           token0: {
@@ -108,7 +109,8 @@ export const Networks = {
           },
           address: '0x37CeE65899dA4B1738412814155540C98DFd752C',
           rewardsAddress: '0x790aDfE75706cf70191b2bD729048e42d8Ed9f60',
-          liqudityUrl: 'https://linkswap.app/#/add/ETH/0x06F3C323f0238c72BF35011071f2b5B7F43A054c',
+          liqudityUrl:
+            'https://linkswap.app/#/add/ETH/0x06F3C323f0238c72BF35011071f2b5B7F43A054c',
         },
         {
           token0: {

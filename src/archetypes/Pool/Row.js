@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Button, Countdown, LazyBoi, Modal, Panel, Stat, Status } from '@components';
+import {
+  Button,
+  Countdown,
+  LazyBoi,
+  Modal,
+  Panel,
+  Stat,
+  Status,
+} from '@components';
 import { Pool, Account } from '@archetypes';
 import { useBit } from '@util/hooks';
 import { units, format } from '@util/helpers';
@@ -31,10 +39,16 @@ const NoPosition = ({ address, className }) => {
       loose
     >
       <p>
-        LINKSWAP LP tokens are required. Once you've added liquidity to the {pool?.token0?.symbol}-
-        {pool?.token1?.symbol} pool you can stake your liquidity tokens on this page.
+        LINKSWAP LP tokens are required. Once you've added liquidity to the{' '}
+        {pool?.token0?.symbol}-{pool?.token1?.symbol} pool you can stake your
+        liquidity tokens on this page.
       </p>
-      <Button status='neutral' href={pool?.liqudityUrl} target='_blank' rel='noopener noreferrer'>
+      <Button
+        status='neutral'
+        href={pool?.liqudityUrl}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
         Add {`${pool?.token0?.symbol}-${pool?.token1?.symbol}`} liquidity
       </Button>
     </Panel>
@@ -52,6 +66,30 @@ const HasPosition = styled(({ address, className }) => {
   //const fiat_rewards_yfl = useConversion(units.fromWei(position?.reward?.yfl), 'yflink', 'usd')
   //const fiat_rewards_ert = useConversion(units.fromWei(position?.reward?.ert), 'yflink', 'usd')
 
+  if (
+    pool?.address === '0xf68c01198cDdEaFB9d2EA43368FC9fA509A339Fa' &&
+    position?.reward?.ert
+  ) {
+    console.log(
+      'CFI --- :',
+      pool?.token0?.symbol,
+      pool?.token1?.symbol,
+      position?.reward?.ert
+    );
+  }
+
+  if (
+    pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C' &&
+    position?.reward?.ert
+  ) {
+    console.log(
+      'MASQ --- :',
+      pool?.token0?.symbol,
+      pool?.token1?.symbol,
+      position?.reward?.ert
+    );
+  }
+
   return (
     <Panel className={className}>
       <span>
@@ -65,16 +103,20 @@ const HasPosition = styled(({ address, className }) => {
             format={(val) => format.maxDB(units.fromWei(val), 5)}
           />
         </Stat>
-        <Button onClick={() => Modal.open(<Pool.Stake address={address} />)}>Stake</Button>
+        <Button onClick={() => Modal.open(<Pool.Stake address={address} />)}>
+          Stake
+        </Button>
       </span>
-
       <span>
         <Stat
           title='Currently Staked'
           //info={`≈ ${format.currency(fiat_staked)}`}
           large
         >
-          <LazyBoi value={position?.staked} format={(val) => format.maxDB(units.fromWei(val), 5)} />
+          <LazyBoi
+            value={position?.staked}
+            format={(val) => format.maxDB(units.fromWei(val), 5)}
+          />
         </Stat>
         <Button
           disabled={!+position?.staked}
@@ -83,27 +125,7 @@ const HasPosition = styled(({ address, className }) => {
           Unstake
         </Button>
       </span>
-
-      <span>
-        <Stat
-          title='Unclaimed YFL'
-          //info={`≈ ${format.currency(fiat_rewards_yfl)}`}
-          large
-        >
-          <LazyBoi
-            value={position?.reward?.yfl}
-            format={(val) => format.maxDB(units.fromWei(val), 5)}
-          />
-        </Stat>
-        <Button
-          disabled={!+position?.reward?.yfl}
-          onClick={() => Modal.open(<Pool.Claim address={address} />)}
-        >
-          {position?.reward?.ert ? 'Claim All' : 'Claim'}
-        </Button>
-      </span>
-
-      {pool?.address === '0xf68c01198cDdEaFB9d2EA43368FC9fA509A339Fa' && (
+      {pool?.address === '0xf68c01198cDdEaFB9d2EA43368FC9fA509A339Fa' && ( // Show previously staked amount for CFI/LINK pool
         <span>
           <Stat
             title='Previously Staked'
@@ -119,27 +141,76 @@ const HasPosition = styled(({ address, className }) => {
           <Button
             className='prev-unstake'
             disabled={!+position?.oldStaked}
-            onClick={() => Modal.open(<Pool.Unstake address={address} prevStaked={true} />)}
+            onClick={() =>
+              Modal.open(<Pool.Unstake address={address} prevStaked={true} />)
+            }
           >
             Unstake
           </Button>
         </span>
       )}
-
-      {position?.reward?.ert && (
+      {pool?.address !== '0xf68c01198cDdEaFB9d2EA43368FC9fA509A339Fa' && ( // Do not show YFL for CFI/LINK pool
         <span>
           <Stat
-            title={`Unclaimed ${pool?.token1?.symbol}`}
-            //info={`≈ ${format.currency(fiat_rewards_ert)}`}
+            title='Unclaimed YFL'
+            //info={`≈ ${format.currency(fiat_rewards_yfl)}`}
             large
           >
             <LazyBoi
-              value={position?.reward?.ert}
+              value={position?.reward?.yfl}
               format={(val) => format.maxDB(units.fromWei(val), 5)}
             />
           </Stat>
+          <Button
+            disabled={!+position?.reward?.yfl}
+            onClick={() => Modal.open(<Pool.Claim address={address} />)}
+          >
+            {position?.reward?.ert ? 'Claim All' : 'Claim'}
+          </Button>
         </span>
       )}
+      {pool?.address === '0xf68c01198cDdEaFB9d2EA43368FC9fA509A339Fa' &&
+        position?.reward?.ert && ( // Show CFI instead of YFL for CFI/LINK pool
+          <span>
+            <Stat
+              title={`Unclaimed CFi`}
+              //info={`≈ ${format.currency(fiat_rewards_ert)}`}
+              large
+            >
+              <LazyBoi
+                value={position?.reward?.ert}
+                format={(val) => format.maxDB(units.fromWei(val), 5)}
+              />
+            </Stat>
+            <Button
+              disabled={!+position?.reward?.ert}
+              onClick={() => Modal.open(<Pool.Claim address={address} />)}
+            >
+              {position?.reward?.ert ? 'Claim All' : 'Claim'}
+            </Button>
+          </span>
+        )}
+      {pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C' &&
+        position?.reward?.ert && ( // Show MASQ as well as YFL for MASQ/ETH pool's reward
+          <span>
+            <Stat
+              title={`Unclaimed MASQ`}
+              //info={`≈ ${format.currency(fiat_rewards_ert)}`}
+              large
+            >
+              <LazyBoi
+                value={position?.reward?.ert}
+                format={(val) => format.maxDB(units.fromWei(val), 5)}
+              />
+            </Stat>
+            <Button
+              disabled={!+position?.reward?.ert}
+              onClick={() => Modal.open(<Pool.Claim address={address} />)}
+            >
+              {position?.reward?.ert ? 'Claim All' : 'Claim'}
+            </Button>
+          </span>
+        )}
     </Panel>
   );
 })`
@@ -251,7 +322,10 @@ export default styled(({ address, className, yfl }) => {
         <span className='stats-group'>
           <span>
             <Stat title='Total Deposited'>
-              <LazyBoi value={deposited} format={(val) => format.currency(val)} />
+              <LazyBoi
+                value={deposited}
+                format={(val) => format.currency(val)}
+              />
             </Stat>
           </span>
           <span>
@@ -259,7 +333,9 @@ export default styled(({ address, className, yfl }) => {
               <div>
                 <LazyBoi
                   value={pool?.reward?.yfl?.rate}
-                  format={(val) => format.decimals(units.fromWei(val) * 86400, 6)}
+                  format={(val) =>
+                    format.decimals(units.fromWei(val) * 86400, 6)
+                  }
                   suffix={<span className='suffix'> YFL/day</span>}
                 />
               </div>
@@ -267,7 +343,9 @@ export default styled(({ address, className, yfl }) => {
                 <div>
                   <LazyBoi
                     value={pool?.reward?.ert?.rate}
-                    format={(val) => format.decimals(units.fromWei(val) * 86400, 6)}
+                    format={(val) =>
+                      format.decimals(units.fromWei(val) * 86400, 6)
+                    }
                     suffix={<span className='suffix'> {ertSymbol}/day</span>}
                   />
                 </div>
@@ -282,7 +360,11 @@ export default styled(({ address, className, yfl }) => {
         </span>
 
         <span>
-          <Button.Icon icon={<IconChevron />} className='toggle' onClick={() => toggleOpen()} />
+          <Button.Icon
+            icon={<IconChevron />}
+            className='toggle'
+            onClick={() => toggleOpen()}
+          />
         </span>
       </div>
       <UserPositionPanel address={address} open={open} />
