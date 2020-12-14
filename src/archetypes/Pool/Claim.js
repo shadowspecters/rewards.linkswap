@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Panel } from '@components';
 import { Pool } from '@archetypes';
@@ -9,6 +9,7 @@ import AppStore from '@app/App.Store';
 
 export default styled(({ address, ...props }) => {
   const { hydrate } = AppStore();
+  const [ertTokenName, setErtTokenName] = useState('');
 
   const position = Pool.usePosition(address);
   const pool = Pool.usePool(address);
@@ -28,6 +29,19 @@ export default styled(({ address, ...props }) => {
     'usd'
   );
 
+  useEffect(() => {
+    if (pool?.address == '0xdef0CEF53E0D4c6A5E568c53EdCf45CeB33DBE46') {
+      // LINK/GSWAP pool
+      setErtTokenName('GSWAP');
+    } else if (pool?.address === '0x626B88542495d2e341d285969F8678B99cd91DA7') {
+      // LINK/YAX pool
+      setErtTokenName('YAX');
+    } else if (pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C') {
+      // MASQ/WETH pool
+      setErtTokenName('MASQ');
+    }
+  }, [pool]); // eslint-disable-line
+
   return (
     <ModalTemplate address={address} {...props} title={'Claim Rewards'}>
       <Panel
@@ -41,7 +55,7 @@ export default styled(({ address, ...props }) => {
           <br />
           {position?.reward.ert &&
             pool?.address !== '0x983c9a1BCf0eB980a232D1b17bFfd6Bbf68Fe4Ce' && // Do not show ERT for BUSD/LINK pool
-            `${pool?.token0?.symbol}: ${units.fromWei(
+            `${ertTokenName}: ${units.fromWei(
               position?.reward.ert
             )} (≈ ${format.currency(fiat_rewards_ert)} USD)`}
         </Fragment>
