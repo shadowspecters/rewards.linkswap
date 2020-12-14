@@ -51,6 +51,7 @@ export default styled(({ address, ...props }) => {
         setErtTokenName('DPI');
         break;
       case '0x9d996bDD1F65C835EE92Cd0b94E15d886EF14D63': // LINK/USDC pool
+      case '0x983c9a1BCf0eB980a232D1b17bFfd6Bbf68Fe4Ce': // BUSD/LINK pool
       default:
         setErtTokenName('');
         break;
@@ -69,7 +70,6 @@ export default styled(({ address, ...props }) => {
           <br />
           {position?.reward.ert &&
             ertTokenName.length > 0 &&
-            pool?.address !== '0x983c9a1BCf0eB980a232D1b17bFfd6Bbf68Fe4Ce' && // Do not show ERT for BUSD/LINK pool
             `${ertTokenName}: ${units.fromWei(position?.reward.ert)}`}
         </Fragment>
 
