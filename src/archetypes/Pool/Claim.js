@@ -65,15 +65,12 @@ export default styled(({ address, ...props }) => {
         subtitle='Available rewards to be claimed:'
       >
         <Fragment>
-          YFL: {units.fromWei(position?.reward.yfl)} (≈{' '}
-          {format.currency(fiat_rewards_yfl)} USD)
+          YFL: {units.fromWei(position?.reward.yfl)}
           <br />
           {position?.reward.ert &&
             ertTokenName.length > 0 &&
             pool?.address !== '0x983c9a1BCf0eB980a232D1b17bFfd6Bbf68Fe4Ce' && // Do not show ERT for BUSD/LINK pool
-            `${ertTokenName}: ${units.fromWei(
-              position?.reward.ert
-            )} (≈ ${format.currency(fiat_rewards_ert)} USD)`}
+            `${ertTokenName}: ${units.fromWei(position?.reward.ert)}`}
         </Fragment>
 
         <Panel.Footer>{tx.controls}</Panel.Footer>
