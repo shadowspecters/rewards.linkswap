@@ -30,21 +30,30 @@ export default styled(({ address, ...props }) => {
   );
 
   useEffect(() => {
-    if (pool?.address == '0xdef0CEF53E0D4c6A5E568c53EdCf45CeB33DBE46') {
-      // LINK/GSWAP pool
-      setErtTokenName('GSWAP');
-    } else if (pool?.address === '0x626B88542495d2e341d285969F8678B99cd91DA7') {
-      // LINK/YAX pool
-      setErtTokenName('YAX');
-    } else if (pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C') {
-      // MASQ/WETH pool
-      setErtTokenName('MASQ');
-    } else if (pool?.address === '0x9d996bDD1F65C835EE92Cd0b94E15d886EF14D63') {
-      // LINK/USDC pool
-      setErtTokenName('');
-    } else if (pool?.address === '0x639916bB4B29859FADF7A272185a3212157F8CE1') {
-      // LINK/CELL
-      setErtTokenName('CEL');
+    switch (pool?.address) {
+      case '0xdef0CEF53E0D4c6A5E568c53EdCf45CeB33DBE46': // LINK/GSWAP pool
+        setErtTokenName('GSWAP');
+        break;
+      case '0x626B88542495d2e341d285969F8678B99cd91DA7':
+        // LINK/YAX pool
+        setErtTokenName('YAX');
+        break;
+      case '0x37CeE65899dA4B1738412814155540C98DFd752C':
+        // MASQ/WETH pool
+        setErtTokenName('MASQ');
+        break;
+      case '0x639916bB4B29859FADF7A272185a3212157F8CE1':
+        // LINK/CELL pool
+        setErtTokenName('CEL');
+        break;
+      case '0xFe04c284a9725c141CF6de85D7E8452af1B48ab7':
+        // DPI/LINK pool
+        setErtTokenName('DPI');
+        break;
+      case '0x9d996bDD1F65C835EE92Cd0b94E15d886EF14D63': // LINK/USDC pool
+      default:
+        setErtTokenName('');
+        break;
     }
   }, [pool]); // eslint-disable-line
 
