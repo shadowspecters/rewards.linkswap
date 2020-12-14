@@ -39,6 +39,12 @@ export default styled(({ address, ...props }) => {
     } else if (pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C') {
       // MASQ/WETH pool
       setErtTokenName('MASQ');
+    } else if (pool?.address === '0x9d996bDD1F65C835EE92Cd0b94E15d886EF14D63') {
+      // LINK/USDC pool
+      setErtTokenName('');
+    } else if (pool?.address === '0x639916bB4B29859FADF7A272185a3212157F8CE1') {
+      // LINK/CELL
+      setErtTokenName('CEL');
     }
   }, [pool]); // eslint-disable-line
 
@@ -54,6 +60,7 @@ export default styled(({ address, ...props }) => {
           {format.currency(fiat_rewards_yfl)} USD)
           <br />
           {position?.reward.ert &&
+            ertTokenName.length > 0 &&
             pool?.address !== '0x983c9a1BCf0eB980a232D1b17bFfd6Bbf68Fe4Ce' && // Do not show ERT for BUSD/LINK pool
             `${ertTokenName}: ${units.fromWei(
               position?.reward.ert
