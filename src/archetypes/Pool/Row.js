@@ -209,7 +209,7 @@ const HasPosition = styled(({ address, className }) => {
               />
             </Stat>
             <Button
-              disabled={!+position?.reward?.ert}
+              // disabled={!+position?.reward?.ert}
               onClick={() => Modal.open(<Pool.Claim address={address} />)}
             >
               {position?.reward?.ert ? 'Claim All' : 'Claim'}
