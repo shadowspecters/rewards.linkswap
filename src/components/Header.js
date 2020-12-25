@@ -36,8 +36,8 @@ export default styled(({ className }) => (
       <LogoFull className="logo" defaultcolor="true" />
     </StyledLink>
     <span className="links">
-      <StyledLink href="https://yflink.io/#/vote" target="_blank">
-        Vote
+      <StyledLink href="https://yflink.io/#/stake" target="_blank">
+        Stake & Vote
       </StyledLink>
       <StyledLink
         href="https://linkswap.app/#/swap?outputCurrency=0x28cb7e841ee97947a86b06fa4090c8451f64c0be"

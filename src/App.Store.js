@@ -146,11 +146,14 @@ const hydration = {
         const ert_rate = await fields.contracts.stakingRewards.methods
           .rewardRate(1)
           .call();
+        const ertContract = new web3.eth.Contract(ERC20, ert_address);
+        const symbol = await ertContract.methods.symbol().call();
 
         if (ert_address !== '0x0000000000000000000000000000000000000000') {
           fields.reward.ert = {
             address: ert_address,
             rate: ert_rate,
+            symbol: symbol,
           };
         }
       } catch (e) {}

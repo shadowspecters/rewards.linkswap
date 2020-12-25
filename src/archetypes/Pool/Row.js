@@ -66,30 +66,6 @@ const HasPosition = styled(({ address, className }) => {
   //const fiat_rewards_yfl = useConversion(units.fromWei(position?.reward?.yfl), 'yflink', 'usd')
   //const fiat_rewards_ert = useConversion(units.fromWei(position?.reward?.ert), 'yflink', 'usd')
 
-  if (
-    pool?.address === '0xf68c01198cDdEaFB9d2EA43368FC9fA509A339Fa' &&
-    position?.reward?.ert
-  ) {
-    console.log(
-      'CFI --- :',
-      pool?.token0?.symbol,
-      pool?.token1?.symbol,
-      position?.reward?.ert
-    );
-  }
-
-  if (
-    pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C' &&
-    position?.reward?.ert
-  ) {
-    console.log(
-      'MASQ --- :',
-      pool?.token0?.symbol,
-      pool?.token1?.symbol,
-      position?.reward?.ert
-    );
-  }
-
   return (
     <Panel className={className}>
       <span>
@@ -169,53 +145,26 @@ const HasPosition = styled(({ address, className }) => {
           </Button>
         </span>
       )}
-      {pool?.address === '0xf68c01198cDdEaFB9d2EA43368FC9fA509A339Fa' &&
-        position?.reward?.ert && ( // Show CFI instead of YFL for CFI/LINK pool
-          <span>
-            <Stat
-              title={`Unclaimed CFi`}
-              //info={`≈ ${format.currency(fiat_rewards_ert)}`}
-              large
-            >
-              <LazyBoi
-                value={position?.reward?.ert}
-                format={(val) => format.maxDB(units.fromWei(val), 5)}
-              />
-            </Stat>
-            <Button
-              disabled={!+position?.reward?.ert}
-              onClick={() => Modal.open(<Pool.Claim address={address} />)}
-            >
-              {position?.reward?.ert ? 'Claim All' : 'Claim'}
-            </Button>
-          </span>
-        )}
-      {(pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C' ||
-        pool?.address === '0xdef0CEF53E0D4c6A5E568c53EdCf45CeB33DBE46') &&
-        position?.reward?.ert && ( // Show MASQ as well as YFL for MASQ/ETH pool's reward
-          <span>
-            <Stat
-              title={
-                pool?.address === '0x37CeE65899dA4B1738412814155540C98DFd752C'
-                  ? `Unclaimed MASQ`
-                  : 'Unclaimed GSWAP'
-              }
-              //info={`≈ ${format.currency(fiat_rewards_ert)}`}
-              large
-            >
-              <LazyBoi
-                value={position?.reward?.ert}
-                format={(val) => format.maxDB(units.fromWei(val), 5)}
-              />
-            </Stat>
-            <Button
-              disabled={!+position?.reward?.ert}
-              onClick={() => Modal.open(<Pool.Claim address={address} />)}
-            >
-              {position?.reward?.ert ? 'Claim All' : 'Claim'}
-            </Button>
-          </span>
-        )}
+      {position?.reward?.ert && ( // Show MASQ as well as YFL for MASQ/ETH pool's reward
+        <span>
+          <Stat
+            title={`Unclaimed ${pool?.reward?.ert?.symbol}`}
+            //info={`≈ ${format.currency(fiat_rewards_ert)}`}
+            large
+          >
+            <LazyBoi
+              value={position?.reward?.ert}
+              format={(val) => format.maxDB(units.fromWei(val), 5)}
+            />
+          </Stat>
+          <Button
+            disabled={!+position?.reward?.ert}
+            onClick={() => Modal.open(<Pool.Claim address={address} />)}
+          >
+            {position?.reward?.ert ? 'Claim All' : 'Claim'}
+          </Button>
+        </span>
+      )}
     </Panel>
   );
 })`
@@ -283,7 +232,6 @@ const UserPositionPanel = styled(({ address, open, className }) => {
     return <NotConnected className={className} />;
   }
 })`
-  max-height: 20rem;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.3) !important;
   margin-top: 2rem;
@@ -306,13 +254,6 @@ export default styled(({ address, className, yfl }) => {
   const pool = Pool.usePool(address);
   const deposited = Pool.useDeposited(address);
   const stake = Pool.useUserStake(address);
-
-  let ertSymbol;
-  if (pool?.token0?.symbol === 'WETH' || pool?.token0?.symbol === 'LINK') {
-    ertSymbol = pool?.token1?.symbol;
-  } else {
-    ertSymbol = pool?.token0?.symbol;
-  }
 
   return (
     <Panel className={`pool-row ${className}`} data-open={open}>
@@ -348,10 +289,17 @@ export default styled(({ address, className, yfl }) => {
                 <div>
                   <LazyBoi
                     value={pool?.reward?.ert?.rate}
-                    format={(val) =>
-                      format.decimals(units.fromWei(val) * 86400, 6)
+                    format={(val) => {
+                      if (pool?.reward?.ert?.symbol === 'CEL') {
+                        return format.decimals((val / 10000) * 86400, 6);
+                      }
+                      return format.decimals(units.fromWei(val) * 86400, 6);
+                    }}
+                    suffix={
+                      <span className='suffix'>
+                        {`${pool?.reward?.ert?.symbol}/day`}
+                      </span>
                     }
-                    suffix={<span className='suffix'> {ertSymbol}/day</span>}
                   />
                 </div>
               )}
@@ -388,14 +336,13 @@ export default styled(({ address, className, yfl }) => {
     //margin-top: 1rem;
 
     .title-col {
-      width: auto;
+      width: 50%;
 
       .pool-name {
         padding: 1.8rem 2.4rem 1.8rem 2rem;
         background: rgba(255, 255, 255, 0.1);
         margin-bottom: 0.9rem;
         display: inline-flex;
-        min-width: 20rem;
       }
 
       .countdown {
@@ -404,14 +351,14 @@ export default styled(({ address, className, yfl }) => {
     }
 
     .stats-group {
-      display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      width: 71%;
+      width: 100%;
 
       > span {
-        margin-left: 16px;
-        width: 33%;
+        margin-left: 10%;
+        margin-bottom: 20px;
+        float: left;
       }
     }
 
@@ -445,5 +392,19 @@ export default styled(({ address, className, yfl }) => {
   &:hover {
     z-index: 2;
     background: #445363;
+  }
+
+  // Block has been added to handle pool panel only if the browser size is 500px or less
+  @media (max-width: 500px) {
+    .pool-name {
+      display: block !important;
+    }
+    .button-action // Hide arrows since the panel box is already clickable
+    {
+      display: none;
+    }
+    .suffix {
+      display: flex;
+    }
   }
 `;

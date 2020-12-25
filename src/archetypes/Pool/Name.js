@@ -9,12 +9,12 @@ export default styled(({ address, subtitle, className, ...rest }) => {
     <div className={`pool-name ${className}`} {...rest}>
       <Pool.Symbol address={address} />
       <span>
-        <div className="pool-name-title">
+        <div className='pool-name-title'>
           {pool?.token0?.symbol}
           <span>|</span>
           {pool?.token1?.symbol}
         </div>
-        {subtitle && <div className="pool-name-subtitle">{subtitle}</div>}
+        {subtitle && <div className='pool-name-subtitle'>{subtitle}</div>}
       </span>
     </div>
   );
@@ -23,7 +23,7 @@ export default styled(({ address, subtitle, className, ...rest }) => {
   align-items: center;
   border-radius: var(--theme--border-radius);
   font-size: var(--font-size-normal);
-  width: 250px;
+  width: 100%;
 
   .pool-symbol {
     margin-right: 0.4em;

@@ -14,6 +14,7 @@ const coinGeckoMapper = {
   usdt: 'tether',
   cel: 'celsius-degree-token',
   yax: 'yaxis',
+  cfi: 'cyberfi',
 };
 
 const useRate = (from, to) => {
@@ -22,7 +23,6 @@ const useRate = (from, to) => {
   useEffect(() => {
     if (!!from && !!to) {
       const _rate = _rates[`${from}_${to}`];
-
       if (from === 'masq') {
         setRate(-1);
       } else if (!_rate) {

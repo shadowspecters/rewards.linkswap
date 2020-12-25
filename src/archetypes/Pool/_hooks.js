@@ -48,9 +48,11 @@ export const useDeposited = (address) => {
     ) {
       let totalDeposited;
       if (token0Rate === -1) {
-        totalDeposited = token1Rate * units.fromWei(pool?.token1?.balance || 0) * 2;
+        totalDeposited =
+          token1Rate * units.fromWei(pool?.token1?.balance || 0) * 2;
       } else if (token1Rate === -1) {
-        totalDeposited = token0Rate * units.fromWei(pool?.token0?.balance || 0) * 2;
+        totalDeposited =
+          token0Rate * units.fromWei(pool?.token0?.balance || 0) * 2;
       } else {
         totalDeposited =
           token0Rate * units.fromWei(pool?.token0?.balance || 0) +
@@ -78,7 +80,8 @@ export const useUserStake = (address) => {
 
   useEffect(() => {
     if (pool?.userPosition?.staked && !!pool?.totalSupply && !!deposited) {
-      const userBalancePercent = (100 / pool?.totalSupply) * pool?.userPosition?.staked * 0.01;
+      const userBalancePercent =
+        (100 / pool?.totalSupply) * pool?.userPosition?.staked * 0.01;
       setData(deposited * userBalancePercent);
     }
   }, [deposited, pool?.userPosition?.staked, pool?.totalSupply]);

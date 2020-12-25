@@ -4,7 +4,7 @@ import { ReactComponent as IconSpinner } from '@icon/spinner.svg';
 import { ReactComponent as IconQuestion } from '@icon/question.svg';
 
 const Loader = styled(({ icon, className }) => {
-  const [_icon, _setIcon] = useState(icon || <IconSpinner animate="spin" />);
+  const [_icon, _setIcon] = useState(icon || <IconSpinner animate='spin' />);
 
   useEffect(() => {
     setTimeout(() => {
@@ -28,9 +28,7 @@ const Loader = styled(({ icon, className }) => {
 
 const Value = ({ prefix, suffix, value, format }) => (
   <Fragment>
-    {prefix}
-    {typeof format === 'function' ? format(value) : value}
-    {suffix}
+    {prefix} {typeof format === 'function' ? format(value) : value} {suffix}
   </Fragment>
 );
 

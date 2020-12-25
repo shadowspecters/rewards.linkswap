@@ -138,10 +138,10 @@ export const Networks = {
         },
         {
           token0: {
-            currencyKey: 'cfi',
+            currencyKey: 'link',
           },
           token1: {
-            currencyKey: 'link',
+            currencyKey: 'cfi',
           },
           address: '0xf68c01198cDdEaFB9d2EA43368FC9fA509A339Fa',
           rewardsAddress: '0x9667947B67199C91c109Be912807190cc490A2A3',
