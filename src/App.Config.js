@@ -24,7 +24,7 @@ export const Networks = {
             currencyKey: 'weth',
           },
           address: '0x7e5A536F3d79791E283940ec379CEE10C9C40e86',
-          rewardsAddress: '0x72368fB97dab2B94A5664EbeEbF504EF482fF149',
+          rewardsAddress: '0xA7053A01fad0B8eb77E3dAE7C22d9E13347Da6d6',
           liqudityUrl:
             'https://linkswap.app/#/add/ETH/0x28cb7e841ee97947a86B06fA4090C8451f64c0be',
         },
@@ -36,7 +36,7 @@ export const Networks = {
             currencyKey: 'link',
           },
           address: '0x189A730921550314934019d184EC05726881D481',
-          rewardsAddress: '0x35FC734948B36370c15387342F048aC87210bC22',
+          rewardsAddress: '0xe065c2663BC5A37dD4381bA90E8F748d7923F50B',
           liqudityUrl:
             'https://linkswap.app/#/add/0x514910771AF9Ca656af840dff83E8264EcF986CA/0x28cb7e841ee97947a86B06fA4090C8451f64c0be',
         },
@@ -120,7 +120,7 @@ export const Networks = {
             currencyKey: 'link',
           },
           address: '0xFe04c284a9725c141CF6de85D7E8452af1B48ab7',
-          rewardsAddress: '0x017FAD4b7a54C1ACe95Ca614954e4D0d12CDb27E',
+          rewardsAddress: '0xdF6552fd7C1823a5784a2d9582fd22ce20E1b7B5',
           liqudityUrl:
             'https://linkswap.app/#/add/0x514910771AF9Ca656af840dff83E8264EcF986CA/0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b',
         },
