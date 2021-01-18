@@ -107,7 +107,7 @@ export const Networks = {
           token1: {
             currencyKey: 'weth',
           },
-          address: '0x37CeE65899dA4B1738412814155540C98DFd752C',
+          address: '0x1B62ac658Ca7D037777D24aa629613633221eFfc',
           rewardsAddress: '0x790aDfE75706cf70191b2bD729048e42d8Ed9f60',
           liqudityUrl:
             'https://linkswap.app/#/add/ETH/0x06F3C323f0238c72BF35011071f2b5B7F43A054c',
